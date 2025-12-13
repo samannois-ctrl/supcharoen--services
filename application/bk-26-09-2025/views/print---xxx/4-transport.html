@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap - Prebuilt Layout</title>
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="container">
+	
+	<div id="customer" class="tab-pane fade in active">
+	<div class="row">
+		<div class="col-xs-12 col-md-12 col-lg-12">
+			<div class="form-group">
+                           
+                <input type="hidden" id="date_input" name="date_input" value="<?php echo $today?>">
+					<label class="col-sm-4 control-label no-padding-right">ทะเบียนเลขที่</label>
+
+					<div class="col-sm-8">
+						<span>
+                            <input name="company_id" type="text" id="company_id"  placeholder="รหัสบริษัท" value="<?php if($_GET['custID']!=''){echo $insurance_travel['company_id'];}?>" />
+								
+					  </span>
+					</div>  
+		  </div>
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">กรมธรรม์เลขที่</label>
+
+					<div class="col-sm-8">
+						<span>
+                                                    <input name="policy_number" type="text" id="policy_number"  placeholder="กรมธรรม์เลขที่" value="<?php if($_GET['custID']!=''){echo $insurance_travel['policy_number'];}?>" />
+								
+					  </span>
+					</div>  
+		  </div>
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">บริษัทประกัน</label>
+
+					<div class="col-sm-8">
+						<span>
+                                                    <select name="corp_id" class="form-control" id="corp_id" style="width: 24%;">
+						<option value="">--เลือกบริษัท--</option>
+					<?php while($corp =mysql_fetch_assoc($resultCorp)){ ?>
+							<option value="<?php echo $corp['id']?>" <?php if($insurance_travel['corp_id']==$corp['id']){ echo "selected";}?>><?php echo $corp['corp_name']?></option>
+					<?php }?>
+					</select>
+								
+					  </span>
+					</div>  
+		  </div>
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">โค้ด</label>
+
+					<div class="col-sm-8">
+						<span>
+                                                   <select name="code_id" class="form-control" id="code_id" style="width: 24%;">
+						<option value="">--เลือกโค้ด--</option>
+					<?php while($code =mysql_fetch_assoc($resultCode)){ ?>
+							<option value="<?php echo $code['id']?>" <?php if($insurance_travel['code_id']==$code['id']){ echo "selected";}?>><?php echo $code['code_name']?></option>
+					<?php }?>
+					</select>
+								
+					  </span>
+					</div>  
+		  </div>
+                    <div class="form-group">
+                 
+                        <label class="col-sm-4 control-label no-padding-right" >ชื่อและที่อยู่ผู้เอาประกัน</label>
+
+					<div class="col-sm-8" >
+						<span>
+                                                    <textarea id="policyholder" name="policyholder" rows="5" style="width:500px" <?php echo $txtDisable?>><?php if(($_GET['custID']!='')&&($insurance_travel['policyholder']!='')){echo $insurance_travel['policyholder'];}?></textarea>
+							
+					  </span>
+					</div>  
+				</div>
+                 <div class="form-group">
+                 
+                        <label class="col-sm-4 control-label no-padding-right" >ยานพาหนะขนส่ง</label>
+						<div class="col-sm-3">
+							<span>
+								<textarea id="assured" name="assured" placeholder="เลขตัวถังและเลขทะเบียน หรืออื่นๆ" rows="5" style="width:90%" <?php echo $txtDisable?>><?php if(($_GET['custID']!='')&&($insurance_travel['assured']!='')){echo $insurance_travel['assured'];}?></textarea>
+							</span>						
+						</div>
+						<div class="col-sm-5" >
+							<span>
+							 	<textarea id="assured" name="assured" placeholder="เลขตัวถังและเลขทะเบียน หรืออื่นๆ" rows="5" style="width:100%" <?php echo $txtDisable?>><?php if(($_GET['custID']!='')&&($insurance_travel['assured']!='')){echo $insurance_travel['assured'];}?></textarea>
+							</span>
+						</div>  						
+				</div>
+			
+
+
+                <div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">ระยะเวลาประกันภัย</label>
+					
+					<div class="col-sm-8">
+						<label>
+                            <input name="agent" id="agent1" type="radio" class="ace" value="1" />&nbsp;<span class="lbl">&nbsp;กรมธรรม์ประกันภัยแบบกำหนดเวลา:</span>
+						</label>					
+						
+						<label  class="control-label no-padding-right">เริ่มวันที่ </label>					
+						
+                        <input name="insurance_start" id="insurance_start" type="text" class=" date-picker"  data-provide="datepicker" data-date-language="th-th"   value="<?php if($_GET['custID']!=''){echo translateDateToThai($insurance_travel['insurance_start']);}?><?php //echo translateDateToThai($CustData['insurance_end'])?>" <?php echo $txtDisable?>/>	 
+					 
+                    
+						<label class="control-label no-padding-right">เวลา</label>
+                 	
+                         <input name="insurance_start_time" id="insurance_start_time" type="time" value="<?php if($_GET['custID']!=''){echo $insurance_travel['insurance_start_time'];}?><?php //echo translateDateToThai($CustData['insurance_end'])?>" <?php echo $txtDisable?>/>
+						
+						<br>
+						<span>ขอบเขต</span>&nbsp;<input type="text" class="ace" style="width: 300px" placeholder="ภายในราชอาณาจักรไทยหรือตามเอกสารแนบ"> &nbsp;<span>และเส้นทางการขนส่ง</span>&nbsp;<input type="text" class="ace" style="width: 200px" placeholder="ตามเส้นทางปกตินิยม">  
+						
+						<br>
+						
+						<label>
+                            <input name="agent" id="agent1" type="radio" class="ace" value="1" />&nbsp;<span class="lbl">&nbsp;กรมธรรม์ประกันภัยแบบขนส่งเฉพาะเที่ยว:</span>
+						</label>	
+						<span>จาก</span>&nbsp;<input type="text" class="ace" style="width: 400px" placeholder=""> 
+					 
+					</div>
+						
+				</div>
+
+
+
+                <div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">จำนวนเงิน</label>
+					
+					<div class="col-sm-8">
+						<label>
+                            <span class="lbl">1. จำนวนเงินความรับผิดรวม</span>&nbsp; <input type="text" class="ace" style="width: 100px" > &nbsp;บาท
+						</label>					
+						<br>
+						<label>
+                            <span class="lbl">2. จำนวนเงินจำกัดความรับผิดต่อการเรียกร้องหรือต่ออุบัติเหตุแต่ละครั้ง</span>&nbsp; <input type="text" class="ace" style="width: 100px" > &nbsp;บาท
+						</label>
+						<br>
+						<label>
+                            <span class="lbl">3. จำนวนเงินจำกัดความรับผิดต่อหนึ่งยานพาหนะ</span>&nbsp; <input type="text" class="ace" style="width: 100px" > &nbsp;บาท
+						</label>
+						<br>
+						<label>
+                            <span class="lbl">4. จำนวนเงินจำกัดความรับผิดเพื่อการส่งมอบชักช้าต่อการเรียกร้อง หรือต่ออุบัติเหตุแต่ละครั้ง และต่อหนึ่งยานพาหนะ</span>&nbsp; <input type="text" class="ace" style="width: 100px" placeholder="ไม่คุ้มครอง" > &nbsp;บาท
+						</label>
+					 
+					</div>
+						
+				</div>
+
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">ภัยเพิ่มพิเศษ</label>
+
+					<div class="col-sm-1">						
+                        <label> <input type="radio" class="ace"> &nbsp;ไม่มี</label>	
+						
+					</div>  
+				
+					<div class="col-sm-7">
+                        <label> <input type="radio" class="ace"> &nbsp;มี</label>
+					</div>  
+                                        
+			</div>
+
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">อัตราเบี้ยประกันภัย</label>
+
+					<div class="col-sm-8">						
+                        <label> <input type="text" class="ace" > &nbsp;</label>							
+					</div>   
+			</div>
+
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">เบี้ยประกันภัย</label>
+
+					<div class="col-sm-8">						
+                        <label> <input type="text" class="ace" > &nbsp;บาท</label>							
+					</div>  
+			</div>
+	
+	
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">อากรแสตมป์</label>
+
+					<div class="col-sm-8">						
+                        <label> <input type="text" class="ace" > &nbsp;บาท</label>							
+					</div>   
+			</div>
+
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">ภาษีมูลค่าเพิ่ม</label>
+
+					<div class="col-sm-8">						
+                        <label> <input type="text" class="ace" > &nbsp;บาท</label>							
+					</div>  
+			</div>
+	
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">เบี้ยประกันภัยรวม</label>
+
+					<div class="col-sm-8">						
+                        <label> <input type="text" class="ace" > &nbsp;บาท</label>							
+					</div>  
+			</div>
+	
+						
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">ตัวแทน</label>
+
+					<div class="col-sm-2">
+						<label>
+                            <input name="agent" id="agent1" type="radio" class="ace" value="1" <?php if(($_GET['custID']!='')&&($insurance_travel['agent']=='1')){ echo "checked";}?> <?php echo $txtDisable?>/>
+							&nbsp;
+							<span class="lbl">&nbsp;ตัวแทน</span>
+					</label>
+					</div>  
+					<div class="col-sm-2">
+						<label>
+                           <input name="agent" id="agent2" type="radio" class="ace" value="2" <?php if(($_GET['custID']!='')&&($insurance_travel['agent']=='2')){ echo "checked";}?> <?php echo $txtDisable?>/>
+							&nbsp;
+							<span class="lbl">&nbsp;นายหน้าประกันภัยรายนี้</span>
+					</label>
+					</div>  
+					<div class="col-sm-2">
+						<label>
+                              <input name="agent_name" id="agent_name" type="text"  value="<?php if($_GET['custID']!=''){echo $insurance_travel['agent_name'];}?>"  <?php echo $txtDisable?>/>
+							
+					</label>
+					</div>  
+				</div>
+			
+			
+           <div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right">ใบอนุญาตเลขที่</label>
+
+					<div class="col-sm-8">
+						<span>
+                              <input name="license_number" type="text" id="license_number"  value="<?php if($_GET['custID']!=''){echo $insurance_travel['license_number'];}?>" />
+						</span>
+					</div>  
+			</div>
+           
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">วันที่ทำสัญญาประกันภัย</label>
+
+					<div class="col-sm-8">
+						<span>
+                            <input name="insurance_contract_date" id="insurance_contract_date" type="text" class=" date-picker"  data-provide="datepicker" data-date-language="th-th"   value="<?php if($_GET['custID']!=''){echo translateDateToThai($insurance_travel['insurance_contract_date']);}?><?php //echo translateDateToThai($CustData['insurance_end'])?>" <?php echo $txtDisable?>/>
+						</span>
+					</div>                                      
+			</div>
+            
+			<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">วันที่ออกกรมธรรม์ประกันภัย</label>
+
+					<div class="col-sm-8">
+						<span>
+                             <input name="policy_date" id="policy_date" type="text" class=" date-picker"  data-provide="datepicker" data-date-language="th-th"   value="<?php if($_GET['custID']!=''){echo translateDateToThai($insurance_travel['policy_date']);}?><?php //echo translateDateToThai($CustData['insurance_end'])?>" <?php echo $txtDisable?>/>
+						</span>
+					</div>                                          
+			</div>
+			
+                    
+
+	
+	
+	
+	
+	
+			
+		</div>
+	</div>
+	
+
+</div>
+
+	
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.3.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+</body>
+</html>
